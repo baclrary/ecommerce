@@ -1,4 +1,3 @@
-
 from rest_framework import viewsets, status
 from rest_framework.permissions import IsAdminUser
 
@@ -16,6 +15,7 @@ class DistributionCategoryViewSet(viewsets.ModelViewSet):
         else:
             permission_classes = []
         return [permission() for permission in permission_classes]
+
 
 class EmailDistributionViewSet(viewsets.ModelViewSet):
     queryset = EmailDistribution.objects.all()

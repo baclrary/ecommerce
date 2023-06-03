@@ -4,6 +4,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 from catalog.models import Product
 from core.validators import validate_product_price
 
+
 class Order(models.Model):
     STATUS_CHOICES = [
         ('open', 'Open'),

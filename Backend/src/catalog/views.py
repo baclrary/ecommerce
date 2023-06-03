@@ -1,31 +1,36 @@
 # DRF
 from rest_framework.permissions import IsAdminUser
 from rest_framework.viewsets import ModelViewSet
-from catalog.models import Category, Product, CategoryAttribute, ProductAttribute
 from catalog.serializers import CategorySerializer, ProductSerializer, CategoryAttributeSerializer, \
     ProductAttributeSerializer
 from core.permissions import IsSeller, IsProductSeller
 
 # Models
 from cart.models import Cart
+from review.models import Review
 from order.models import Order, OrderItem
-from catalog.models import Category, Product
+from catalog.models import Category, Product, CategoryAttribute, ProductAttribute, SubCategory
 
 # Models Views
 from cart.views import get_cart_from_session
+from review.views import ReviewCreateView
 
 # Django
 from django.conf import settings
 from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.views import View
-from django.views.generic import TemplateView
+from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
+
+# Forms
+from review.forms import ReviewForm
 
 # Stripe
 import stripe
+
 stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
 
 
@@ -53,6 +58,82 @@ class CategoryAttributeViewSet(ModelViewSet):
         return [permission() for permission in permission_classes]
 
 
+class SubCategoriesList(generic.ListView):
+    template_name = "catalog/category_detail.html"
+    context_object_name = "sub_categories"
+    model = SubCategory
+
+    def get_queryset(self):
+        """
+        Overrides the get_queryset method to retrieve only SubCategories
+        belonging to the Category specified by the slug in the URL.
+        """
+        category = get_object_or_404(Category, slug=self.kwargs['category_slug'])
+        return SubCategory.objects.filter(category=category)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu_categories'] = Category.objects.all()
+        return context
+
+
+class SubCategoryDetail(generic.DetailView):
+    """
+    This is a DetailView for SubCategory. It provides context for a template
+    to show detailed information about a specific SubCategory including its related
+    Products, Attributes, and the specific Filters for its Products.
+    """
+    template_name = "catalog/sub_category_detail.html"
+    context_object_name = "sub_category"
+    model = SubCategory
+
+    def get_object(self):
+        """
+        Overrides the get_object method to use slugs in the URL to retrieve the desired SubCategory object.
+        """
+        return get_object_or_404(SubCategory, category__slug=self.kwargs['category_slug'],
+                                 slug=self.kwargs['sub_category_slug'])
+
+    def get_context_data(self, **kwargs):
+        """
+        Overrides the get_context_data method to add additional context data:
+        - A dictionary of category_attributes for the SubCategory and their unique values.
+        - A filtered queryset of Products for the SubCategory based on the selected filters in the GET request.
+        """
+        context = super().get_context_data(**kwargs)
+
+        # Add all CategoryAttributes for this SubCategory to the context
+        category_attributes = self.object.attributes.all()
+        attribute_dict = {}
+        for attribute in category_attributes:
+            attribute_dict[attribute] = list(
+                set([product_attr.value for product_attr in attribute.attributes_values.all()]))
+
+        context['attributes'] = attribute_dict
+        context['category_slug'] = self.kwargs['category_slug']
+        context['menu_categories'] = Category.objects.all()
+
+        # Start with all Products for this SubCategory
+        sub_category = self.object
+        products = Product.objects.filter(category=sub_category)
+
+        # Now, we iterate over each attribute and its selected values
+        for category_attribute in CategoryAttribute.objects.filter(category=sub_category):
+            attribute_values = self.request.GET.getlist(f"{category_attribute.name}-{category_attribute.id}")
+
+            if attribute_values:
+                # This time, instead of combining the Q objects with OR,
+                # we directly apply the filter to the products queryset for each attribute
+                products = products.filter(attributes__attribute=category_attribute,
+                                           attributes__value__in=attribute_values)
+
+        # We no longer need to combine Q objects or use distinct,
+        # as we're filtering the products queryset directly in the loop
+        context['products'] = products
+
+        return context
+
+
 class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
@@ -69,7 +150,7 @@ class ProductViewSet(ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 
-        
+
 class ProductAttributeViewSet(ModelViewSet):
     queryset = ProductAttribute.objects.all()
     serializer_class = ProductAttributeSerializer
@@ -82,10 +163,46 @@ class ProductAttributeViewSet(ModelViewSet):
         else:
             permission_classes = []
         return [permission() for permission in permission_classes]
-      
 
 
-class SuccessfulPayment(TemplateView):
+class ProductDetail(generic.DetailView):
+    template_name = "catalog/product_detail.html"
+    context_object_name = "product"
+    model = Product
+
+    def get_object(self):
+        return get_object_or_404(Product, id=self.kwargs['product_id'])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        reviews = Review.objects.filter(product=self.get_object())
+
+        # get product attributes
+        product = self.get_object()
+        attribute_dict = {}
+
+        # Loop through all product attributes
+        for attr in product.attributes.all():
+            # Check if attribute name already exists in the dictionary
+            if attr.attribute.name in attribute_dict:
+                # If it exists, append the value
+                attribute_dict[attr.attribute.name].append(attr.value)
+            else:
+                # If it doesn't exist, create a new list with the value
+                attribute_dict[attr.attribute.name] = [attr.value]
+
+        context['menu_categories'] = Category.objects.all()
+        context['attributes'] = attribute_dict
+        context['reviews'] = reviews
+        context['review_form'] = ReviewForm(initial={'product': product, 'user': self.request.user})
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        return ReviewCreateView.as_view()(request)
+
+
+class SuccessfulPayment(generic.TemplateView):
     template_name = 'success.html'
 
 
@@ -167,7 +284,8 @@ class CheckoutSessionView(View):
         total_sum = request.POST.get('total_sum')
 
         cart = get_cart_from_session(self.request)
-        checkout_session = self.create_checkout_session(request, cart, total_sum, email, first_name, last_name, phone, address)
+        checkout_session = self.create_checkout_session(request, cart, total_sum, email, first_name, last_name, phone,
+                                                        address)
 
         return JsonResponse({'sessionId': checkout_session.id})
 
@@ -195,7 +313,6 @@ def stripe_session_completed_webhook(request, *args, **kwargs):
 
         if not metadata:
             return HttpResponse(status=400)
-
 
         cart = Cart.objects.get(id=metadata.get('cart_id'))
 

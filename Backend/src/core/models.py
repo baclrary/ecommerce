@@ -4,13 +4,19 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-# Create your models here.
 from phonenumber_field.modelfields import PhoneNumberField
+
 from core.managers import CustomUserManager
 from distribution.models import EmailDistribution
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    """
+    A custom user model where the unique identifier is email address.
+    Inherits from Django's AbstractBaseUser and PermissionsMixin for
+    authentication fields and methods.
+    """
+
     class UserTypeChoices(models.TextChoices):
         SELLER = "seller", _("seller")
         BUYER = "buyer", _("buyer")
@@ -51,9 +57,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class Profile(models.Model):
-    class Meta:
-        abstract = True
-
+    """
+    An abstract base class for user profiles. This class cannot be instantiated
+    and must be inherited by other classes.
+    """
     user = models.OneToOneField(
         to=get_user_model(),
         on_delete=models.CASCADE,
@@ -74,7 +81,7 @@ class Profile(models.Model):
     )
     photo = models.ImageField(
         _("photo"),
-        upload_to="?", # WHERE DO WE STORE STATIC FILES?
+        upload_to="profiles/images",
         null=True,
         blank=True,
     )
@@ -84,6 +91,10 @@ class Profile(models.Model):
 
 
 class BuyerProfile(Profile):
+    """
+    BuyerProfile model that extends Profile with buyer-specific fields.
+    """
+
     class UserGenderChoices(models.TextChoices):
         MALE = "male", _("male")
         FEMALE = "female", _("female")
@@ -101,10 +112,13 @@ class BuyerProfile(Profile):
     )
 
     def age(self):
-        return timezone.now() - self.date_of_birth
+        return (timezone.now() - self.date_of_birth).days // 365
 
 
 class SellerProfile(Profile):
+    """
+    SellerProfile model that extends Profile with seller-specific fields.
+    """
     website = models.URLField()
     is_resident = models.BooleanField(
         default=True,

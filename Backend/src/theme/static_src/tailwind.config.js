@@ -6,6 +6,8 @@
  */
 
 module.exports = {
+    mode: 'jit',  // Enable JIT mode
+
     content: [
         /**
          * HTML. Paths to Django template files that will contain Tailwind CSS classes.
