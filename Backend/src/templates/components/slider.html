@@ -44,11 +44,9 @@
         Alpine.data('slider', () => ({
             currentIndex: 1,
             images: [
-                'https://content2.rozetka.com.ua/files/images/original/340335943.jpg',
-                'https://marketplace.canva.com/EAE6uxzge6c/1/0/1600w/canva-yellow-and-white-minimalist-big-sale-banner-BjBIq-T_6j4.jpg',
-                'https://marketplace.canva.com/EAFWt8Wq208/1/0/1600w/canva-grey-minimalist-special-offer-banner-landscape-tVz4E4KVLgk.jpg',
-                'https://developers.livechat.com/static/e132a225673bab203f98f911612972c4/d9ed5/support-for-ukraine-banner.png',
-                'https://boohooamplience.a.bigcontent.io/v1/static/2023_WK13_DP_UP_TO_70OFF_SALE_BANNERS_MOB_746_X_300'
+                {% for banner in banners %}
+                    "{{ banner.image.url }}"{% if not forloop.last %},{% endif %}
+                {% endfor %}
             ],
             back() {
                 if (this.currentIndex > 1) {

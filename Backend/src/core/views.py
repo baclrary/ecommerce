@@ -7,7 +7,7 @@ from django.db.models import Count
 from django.views.generic import TemplateView
 
 
-from catalog.models import Category, Product
+from catalog.models import Category, Product, Banner
 
 
 class HomePage(TemplateView):
@@ -18,6 +18,7 @@ class HomePage(TemplateView):
         context['menu_categories'] = Category.objects.all()
         context['new_products'] = Product.objects.filter(is_active=True).order_by('-id')[:5]
         context['top_products'] = Product.objects.annotate(review_count=Count('reviews')).filter(review_count__gt=0, is_active=True).order_by('-review_count')
+        context['banners'] = Banner.objects.all()
 
         return context
 
