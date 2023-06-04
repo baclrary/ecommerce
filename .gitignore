@@ -165,3 +165,6 @@ Backend/static
 
 # MacOS
 .DS_Store
+
+# JavaScript
+node_modules
