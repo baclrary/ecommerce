@@ -168,3 +168,7 @@ Backend/static
 
 # JavaScript
 node_modules
+
+# Media
+/backend/src/media/*
+!/backend/src/media/assets/
