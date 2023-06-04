@@ -1,5 +1,6 @@
 {#{% load static %}#}
 {% load static tailwind_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -35,7 +36,7 @@
         {% block content %}
         {% include 'components/carousel.html' %}
         {% include 'components/new_products.html' %}
-        {% include 'components/trend_products.html' %}
+        {% include 'components/top_products.html' %}
         {% endblock content %}
         {% include 'components/footer.html' %}
     </body>

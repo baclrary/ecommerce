@@ -356,49 +356,51 @@
             <main class="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
                 <div class="border-b border-gray-200 pt-14 pb-10">
                     <h1 class="text-4xl font-bold tracking-tight text-gray-900">{{ sub_category.title }}</h1>
-                    <p class="mt-4 text-base text-gray-500">{{ sub_category.description }}</p>
+                    <p class="mt-4 text-base text-gray-500">
+                        {% if sub_category.description %}{{ sub_category.description }}{% endif %}</p>
                 </div>
 
                 <div class="pt-6 pb-24 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4">
-                    <aside>
-                        <h2 class="sr-only">Filters</h2>
+                    {% if attributes.items %}
+                        <aside>
+                            <h2 class="sr-only">Filters</h2>
 
-                        <!-- Mobile filter dialog toggle, controls the 'mobileFilterDialogOpen' state. -->
-                        <button type="button" class="inline-flex items-center lg:hidden">
-                            <span class="text-sm font-medium text-gray-700">Filters</span>
-                            <!-- Heroicon name: mini/plus -->
-                            <svg class="ml-1 h-5 w-5 flex-shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg"
-                                 viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z"/>
-                            </svg>
-                        </button>
+                            <!-- Mobile filter dialog toggle, controls the 'mobileFilterDialogOpen' state. -->
+                            <button type="button" class="inline-flex items-center lg:hidden">
+                                <span class="text-sm font-medium text-gray-700">Filters</span>
+                                <!-- Heroicon name: mini/plus -->
+                                <svg class="ml-1 h-5 w-5 flex-shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                                     viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z"/>
+                                </svg>
+                            </button>
 
-                        <div class="hidden lg:block">
-                            <form id="filterForm" method="GET" class="space-y-10 divide-y divide-gray-200">
-                                {% for category_attribute, product_values in attributes.items %}
-                                    <div class="">
-                                        <div class="mb-4"></div>
-                                        <fieldset>
-                                            <legend class="block text-sm font-medium text-gray-900">{{ category_attribute.name|upper }}</legend>
-                                            <div class="space-y-3 pt-6">
-                                                {% for value in product_values %}
-                                                    <div class="flex items-center">
-                                                        <input id="category-{{ category_attribute.id }}"
-                                                               name="{{ category_attribute.name }}-{{ category_attribute.id }}"
-                                                               value="{{ value }}" type="checkbox"
-                                                               class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                                                        <label for="category-{{ category_attribute.id }}"
-                                                               class="ml-3 text-sm text-gray-600">{{ value|title }}</label>
-                                                    </div>
-                                                {% endfor %}
-                                            </div>
-                                        </fieldset>
-                                    </div>
-                                {% endfor %}
-                            </form>
-                        </div>
-                    </aside>
-
+                            <div class="hidden lg:block">
+                                <form id="filterForm" method="GET" class="space-y-10 divide-y divide-gray-200">
+                                    {% for category_attribute, product_values in attributes.items %}
+                                        <div class="">
+                                            <div class="mb-4"></div>
+                                            <fieldset>
+                                                <legend class="block text-sm font-medium text-gray-900">{{ category_attribute.name|upper }}</legend>
+                                                <div class="space-y-3 pt-6">
+                                                    {% for value in product_values %}
+                                                        <div class="flex items-center">
+                                                            <input id="category-{{ category_attribute.id }}"
+                                                                   name="{{ category_attribute.name }}-{{ category_attribute.id }}"
+                                                                   value="{{ value }}" type="checkbox"
+                                                                   class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                                                            <label for="category-{{ category_attribute.id }}"
+                                                                   class="ml-3 text-sm text-gray-600">{{ value|title }}</label>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    {% endfor %}
+                                </form>
+                            </div>
+                        </aside>
+                    {% endif %}
                     <section aria-labelledby="product-heading" class="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3">
                         <h2 id="product-heading" class="sr-only">Products</h2>
 

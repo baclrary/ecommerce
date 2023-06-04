@@ -113,9 +113,9 @@ class SubCategoryDetail(generic.DetailView):
         context['category_slug'] = self.kwargs['category_slug']
         context['menu_categories'] = Category.objects.all()
 
-        # Start with all Products for this SubCategory
+        # Start with all active Products for this SubCategory
         sub_category = self.object
-        products = Product.objects.filter(category=sub_category)
+        products = Product.objects.filter(category=sub_category, is_active=True)
 
         # Now, we iterate over each attribute and its selected values
         for category_attribute in CategoryAttribute.objects.filter(category=sub_category):
