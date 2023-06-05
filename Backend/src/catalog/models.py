@@ -13,7 +13,8 @@ class Category(models.Model):
     title = models.CharField(max_length=255, db_index=True)
     slug = models.SlugField(unique=True, max_length=255)
     icon = models.ImageField(default="assets/category_icons/default_category_icon.png", upload_to="category_icons/",
-                             blank=True, null=True, max_length=255)
+                             blank=True, null=True, max_length=255, verbose_name="Header Icon")
+    image = models.ImageField(blank=True, null=True, verbose_name="Category Image")
     description = models.CharField(max_length=150)
 
     class Meta:
@@ -24,6 +25,10 @@ class Category(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
+
+        if not self.image and self.icon:
+            self.image = self.icon
+
         super(Category, self).save(*args, **kwargs)
 
 
@@ -103,8 +108,6 @@ class Banner(models.Model):
 
     def __str__(self):
         return f"Banner - {self.id}"
-
-
 
 # class Slider(models.Model):
 #     title = models.CharField(max_length=255)
