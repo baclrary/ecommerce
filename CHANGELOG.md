@@ -2,6 +2,21 @@
 - Date Format - yyyy/mm/dd
 
 
+## [DEV] - 2023-06-04
+
+Converted fork into repository because commits history
+
+### Added
+- tailwind js packages
+- Top product component
+- Most reviewed component
+- Implemented banner slider
+
+### Fixed
+- Display product based on is_active field value
+
+
+
 ## [DEV] - 2023-06-03
 
 #### Refactor day
