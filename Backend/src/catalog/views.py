@@ -58,6 +58,17 @@ class CategoryAttributeViewSet(ModelViewSet):
         return [permission() for permission in permission_classes]
 
 
+class CategoriesList(generic.ListView):
+    template_name = 'catalog/categories_list.html'
+    model = Category
+    context_object_name = 'categories'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu_categories'] = Category.objects.all()
+        return context
+
+
 class SubCategoriesList(generic.ListView):
     template_name = "catalog/category_detail.html"
     context_object_name = "sub_categories"
