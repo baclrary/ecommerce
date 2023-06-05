@@ -1,9 +1,8 @@
-from statistics import fmean
+from statistics import mean
 
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
-from django.db.models import Q
 from django.utils.text import slugify
 
 from core.validators import validate_products_count, validate_product_price
@@ -11,7 +10,7 @@ from core.validators import validate_products_count, validate_product_price
 
 class Category(models.Model):
     title = models.CharField(max_length=255, db_index=True)
-    slug = models.SlugField(unique=True, max_length=255)
+    slug = models.SlugField(unique=True, max_length=255, allow_unicode=True)
     icon = models.ImageField(default="assets/category_icons/default_category_icon.png", upload_to="category_icons/",
                              blank=True, null=True, max_length=255, verbose_name="Header Icon")
     image = models.ImageField(blank=True, null=True, verbose_name="Category Image")
@@ -34,7 +33,7 @@ class Category(models.Model):
 
 class SubCategory(models.Model):
     title = models.CharField(max_length=255)
-    slug = models.SlugField(unique=True, max_length=120)
+    slug = models.SlugField(unique=True, max_length=120, allow_unicode=True)
     category = models.ForeignKey(Category, related_name='subcategory', on_delete=models.SET_NULL, null=True)
     image = models.ImageField(default="assets/sub_category_images/default_sub_category.png",
                               upload_to="sub_category_images/", blank=True, null=True, max_length=255)
@@ -82,15 +81,14 @@ class Product(models.Model):
     @property
     def price(self):
         try:
-            product_on_promotions = self.product_on_promotion.get(
-                Q(promotion_id__is_active=True) & Q(product_id=self.id))
+            product_on_promotions = self.product_on_promotion.get(promotion_id__is_active=True)
             return product_on_promotions.promo_price
         except ObjectDoesNotExist:
             return self.base_price
 
     def get_product_rating(self):
         ratings = [review.rating for review in self.reviews.all()]
-        return fmean(ratings)
+        return mean(ratings) if ratings else None
 
 
 class ProductAttribute(models.Model):
@@ -108,18 +106,3 @@ class Banner(models.Model):
 
     def __str__(self):
         return f"Banner - {self.id}"
-
-# class Slider(models.Model):
-#     title = models.CharField(max_length=255)
-#
-#     def __str__(self):
-#         return self.title
-
-
-# class Banner(models.Model):
-#     image = models.ImageField(upload_to='slider_images', default='assets/banners/0.webp',
-#                               blank=True, null=True)
-#     slider = models.ForeignKey(Slider, related_name='banners', on_delete=models.CASCADE)
-#
-#     def __str__(self):
-#         return f"{self.slider.title} - Banner with id #{self.id}"
