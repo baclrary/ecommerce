@@ -6,7 +6,10 @@ from rest_framework import permissions, routers
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-import catalog.views as catalog_views
+# View sets
+import catalog.viewsets as catalog_view_sets
+
+# Views
 import cart.views as cart_views
 import core.views as core_views
 import distribution.views as distribution_views
@@ -36,10 +39,10 @@ main_router.register(r'order_item', order_views.OrderItemViewSet, basename='orde
 main_router.register(r'top_sales', order_views.TopSalesAPIView, basename='top_sales')
 
 # Catalog related routes
-main_router.register(r'category', catalog_views.CategoryViewSet, basename='category')
-main_router.register(r'category_attribute', catalog_views.CategoryAttributeViewSet, basename='category_attribute')
-main_router.register(r'product', catalog_views.ProductViewSet, basename='product')
-main_router.register(r'product_attribute', catalog_views.ProductAttributeViewSet, basename='product_attribute')
+main_router.register(r'category', catalog_view_sets.CategoryViewSet, basename='category')
+main_router.register(r'category_attribute', catalog_view_sets.CategoryAttributeViewSet, basename='category_attribute')
+main_router.register(r'product', catalog_view_sets.ProductViewSet, basename='product')
+main_router.register(r'product_attribute', catalog_view_sets.ProductAttributeViewSet, basename='product_attribute')
 
 # Review related routes
 main_router.register(r'review', review_views.ReviewViewSet, basename='review')
@@ -61,9 +64,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include(main_router.urls)),
     path('api/v1/authentication/', include("core.urls")),
-    path('checkout/', catalog_views.CheckoutSessionView.as_view(), name='checkout'),
-    path('stripe-session-completed/', catalog_views.stripe_session_completed_webhook, name='stripe-session-completed'),
-    path('success/', catalog_views.SuccessfulPayment.as_view(), name='success'),
+    # path('checkout/', catalog_views.CheckoutSessionView.as_view(), name='checkout'),
+    # path('stripe-session-completed/', catalog_views.stripe_session_completed_webhook, name='stripe-session-completed'),
+    # path('success/', catalog_views.SuccessfulPayment.as_view(), name='success'),
     path('api/v1/search/text/', core_views.text_search, name='text_search'),
     path('api/v1/search/voice/', core_views.voice_search, name='voice_search'),
     path("__reload__/", include("django_browser_reload.urls")),
