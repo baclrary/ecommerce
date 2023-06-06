@@ -57,18 +57,18 @@ main_router.register(r'distribution', distribution_views.EmailDistributionViewSe
 main_router.register(r'distribution_categories', distribution_views.DistributionCategoryViewSet, basename='distribution_categories')
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('', core_views.HomePage.as_view(), name='home'),
     path('cart/', include("cart.urls"), name="cart"),
     path('categories/', include("catalog.urls"), name="catalog"),
     path('review/', include("review.urls"), name="review"),
-    path('admin/', admin.site.urls),
-    path('api/v1/', include(main_router.urls)),
-    path('api/v1/authentication/', include("core.urls")),
+    # path('api/v1/', include(main_router.urls)),
+    # path('api/v1/authentication/', include("users.urls")),
     # path('checkout/', catalog_views.CheckoutSessionView.as_view(), name='checkout'),
     # path('stripe-session-completed/', catalog_views.stripe_session_completed_webhook, name='stripe-session-completed'),
     # path('success/', catalog_views.SuccessfulPayment.as_view(), name='success'),
-    path('api/v1/search/text/', core_views.text_search, name='text_search'),
-    path('api/v1/search/voice/', core_views.voice_search, name='voice_search'),
+    # path('api/v1/search/text/', core_views.text_search, name='text_search'),
+    # path('api/v1/search/voice/', core_views.voice_search, name='voice_search'),
     path("__reload__/", include("django_browser_reload.urls")),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from phonenumber_field.modelfields import PhoneNumberField
 
-from core.managers import CustomUserManager
+from users.managers import CustomUserManager
 from distribution.models import EmailDistribution
 
 
@@ -86,7 +86,7 @@ class Profile(models.Model):
         blank=True,
     )
     distributions = models.ManyToManyField(
-        EmailDistribution
+        EmailDistribution, blank=True
     )
 
 

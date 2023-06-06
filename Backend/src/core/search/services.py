@@ -3,12 +3,11 @@ from django.contrib.postgres.search import TrigramSimilarity
 
 from catalog.models import Product, Category
 from catalog.serializers import CategorySerializer, ProductSerializer
-from core.models import SellerProfile
-from core.serializers import SellerSerializer
+from users.models import SellerProfile
+from users.serializers import SellerSerializer
 
 
 class Search:
-
     def perform_search(self, query):
         products = Product.objects.annotate(similarity=TrigramSimilarity("title", query) +
                                                        TrigramSimilarity("description", query)) \

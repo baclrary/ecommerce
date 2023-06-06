@@ -58,12 +58,14 @@ INSTALLED_APPS = [
     'review',
     'phonenumber_field',
     'promotions',
+    'payments',
     'django_celery_beat',
     'celery',
     'kombu.transport.redis',
     'corsheaders',
     'tailwind',
     'theme',
+    'users',
     # 'django_browser_reload'
 ]
 
@@ -157,7 +159,7 @@ STATICFILES_DIRS = (
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = "core.User"
+AUTH_USER_MODEL = "users.User"
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
