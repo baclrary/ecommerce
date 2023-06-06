@@ -3,35 +3,9 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.views import generic
 
-from rest_framework import viewsets, status
-from rest_framework.response import Response
-
 from catalog.models import Product
-from core.permissions import IsAuthenticated
-from .serializers import ReviewSerializer
-from .models import Review
+
 from .forms import ReviewForm
-
-
-class ReviewViewSet(viewsets.ModelViewSet):
-    queryset = Review.objects.all()
-    serializer_class = ReviewSerializer
-    permission_classes = [IsAuthenticated]
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
-    def update(self, request, *args, **kwargs):
-        review = self.get_object()
-        if review.user != request.user:
-            return Response({'message': 'Not found', 'status': '404'}, status=status.HTTP_404_NOT_FOUND, )
-        return super(ReviewViewSet, self).update(request, *args, **kwargs)
-
-    def destroy(self, request, *args, **kwargs):
-        review = self.get_object()
-        if review.user != request.user:
-            return Response({'message': 'Not found', 'status': '404'}, status=status.HTTP_404_NOT_FOUND, )
-        return super(ReviewViewSet, self).destroy(request, *args, **kwargs)
 
 
 class ReviewCreateView(generic.View):

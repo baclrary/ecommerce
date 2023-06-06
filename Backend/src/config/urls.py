@@ -8,13 +8,13 @@ from drf_yasg import openapi
 
 # View sets
 import catalog.viewsets as catalog_view_sets
+import review.viewsets as review_view_sets
 
 # Views
 import cart.views as cart_views
 import core.views as core_views
 import distribution.views as distribution_views
 import order.views as order_views
-import review.views as review_views
 
 # Schema setup
 schema_view = get_schema_view(
@@ -45,7 +45,7 @@ main_router.register(r'product', catalog_view_sets.ProductViewSet, basename='pro
 main_router.register(r'product_attribute', catalog_view_sets.ProductAttributeViewSet, basename='product_attribute')
 
 # Review related routes
-main_router.register(r'review', review_views.ReviewViewSet, basename='review')
+main_router.register(r'review', review_view_sets.ReviewViewSet, basename='review')
 
 # Cart related routes
 main_router.register(r'cart', cart_views.CartViewSet, basename='cart')
