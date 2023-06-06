@@ -19,7 +19,6 @@ class CartViewSet(ModelViewSet):
     serializer_class = CartSerializer
 
 
-
 class CartItemViewSet(ModelViewSet):
     queryset = CartItem.objects.all()
     serializer_class = CartItemSerializer
@@ -80,21 +79,12 @@ def merge_carts(user, session_cart):
 def get_cart_from_session(request):
     cart_id = request.session.get('cart_id')
     user = request.user if request.user.is_authenticated else None
+    cart = Cart.objects.filter(id=cart_id).first() if cart_id else None
 
     if user:
-        user_cart = Cart.objects.filter(user=user).first()
-        if user_cart:
-            cart = user_cart
-        else:
-            if not cart_id or not Cart.objects.filter(id=cart_id).exists():
-                cart = Cart.objects.create(user=user)
-            else:
-                cart = Cart.objects.get(id=cart_id)
+        cart = Cart.objects.filter(user=user).first() or cart or Cart.objects.create(user=user)
     else:
-        if not cart_id or not Cart.objects.filter(id=cart_id).exists():
-            cart = Cart.objects.create()
-        else:
-            cart = Cart.objects.get(id=cart_id)
+        cart = cart or Cart.objects.create()
 
     request.session['cart_id'] = cart.id
     return cart
