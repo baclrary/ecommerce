@@ -13,10 +13,10 @@
         <meta name="author" content="">
         {% tailwind_css %}
 
-{#        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"#}
-{#              rel="stylesheet">#}
+        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+              rel="stylesheet">
 
-{#        <script src="https://cdn.tailwindcss.com"></script>#}
+        <script src="https://cdn.tailwindcss.com"></script>
 {##}
 {#        <script>#}
 {#        tailwind.config = {#}
@@ -34,6 +34,7 @@
     <body class=''>
         {% include 'components/header.html' %}
         {% block content %}
+        {% include 'pages/welcome.html' %}
         {% include 'components/slider.html' %}
         {% include 'components/new_products.html' %}
         {% include 'components/top_products.html' %}

@@ -115,6 +115,7 @@
                         </div>
 
                         <!-- Filters -->
+                        {% if products %}
                         <form class="mt-4">
                             <div class="border-t border-gray-200 pt-4 pb-4">
                                 <fieldset>
@@ -328,6 +329,7 @@
                                 </fieldset>
                             </div>
                         </form>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -361,7 +363,7 @@
                 </div>
 
                 <div class="pt-6 pb-24 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4">
-                    {% if attributes.items %}
+                    {% if products and attributes.items %}
                         <aside>
                             <h2 class="sr-only">Filters</h2>
 
@@ -400,6 +402,8 @@
                                 </form>
                             </div>
                         </aside>
+                    {% else %}
+                        <p>No products here yet</p>
                     {% endif %}
                     <section aria-labelledby="product-heading" class="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3">
                         <h2 id="product-heading" class="sr-only">Products</h2>

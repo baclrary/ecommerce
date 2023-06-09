@@ -2,6 +2,65 @@
 - Date Format - yyyy/mm/dd
 
 
+
+## [DEV] - 2023-06-07
+
+REFACTOOOOR
+### CHANGED
+- Improve templates 
+
+
+
+
+## [DEV] - 2023-06-06
+
+REFACTOOOOR
+### ADDED
+- Admin.py to users
+
+### CHANGED
+- Move authentication from core to users app
+- Refactor Cart.views.get_cart_from_session func
+
+
+
+
+
+## [DEV] - 2023-06-05
+
+Another refactor day
+
+### Added
+- Category's image field
+- Categories list
+- Catalog
+  - Admin.py 
+    - Search fields
+    - List filters
+    - Inlines for related models
+    - Docstrings
+  - Model.py
+    - add allow_unicode=True to slug fields
+- viewsets.py
+
+
+### Changed
+- Catalog 
+  - Views.py
+    - Refactoring
+      - Removed unnecessary imports:
+      - Added individual functions for getting attributes, reviews, and filtered products
+      - Added prefetch_related and select_related: To improve the efficiency of database queries
+      - Created a function for getting all categories
+      - Move viewsets to viewsets.py
+      - Docstrings
+  - Model.py
+    - Fixing
+      - added a check to func get_product_rating to ensure there are ratings before attempting to calculate the mean
+      
+    - Refactoring
+      - removing unnecessary filtering from @price property
+
 ## [DEV] - 2023-06-04
 
 Converted fork into repository because commits history
