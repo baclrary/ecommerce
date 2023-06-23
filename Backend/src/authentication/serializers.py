@@ -1,25 +1,25 @@
 from rest_framework import serializers
-from .models import User, SellerProfile, BuyerProfile
+from .models import CustomUser, SellerProfile, BuyerProfile
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(style={"input_type": "password"}, write_only=True)
 
     class Meta:
-        model = User
+        model = CustomUser
         fields = ["email", "phone", "type", "password"]
 
     def validate_email(self, value):
         # This method is provided by Django Rest Framework for field level validation.
-        if User.objects.filter(email=value).exists():
+        if CustomUser.objects.filter(email=value).exists():
             raise serializers.ValidationError(f"User with email - {value} - is already registered")
         return value
 
     def create(self, validated_data):
-        user = User.objects.create_user(email=validated_data["email"],
-                                        password=validated_data["password"],
-                                        phone=validated_data["phone"],
-                                        type=validated_data["type"])
+        user = CustomUser.objects.create_user(email=validated_data["email"],
+                                              password=validated_data["password"],
+                                              phone=validated_data["phone"],
+                                              type=validated_data["type"])
         user.set_password(validated_data["password"])
         user.is_active = True
         user.save()
@@ -28,7 +28,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = CustomUser
         fields = ["email", "phone", "type"]
 
 
