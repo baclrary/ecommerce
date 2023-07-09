@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CustomUser, SellerProfile, BuyerProfile
+from users.models import CustomUser, SellerProfile, BuyerProfile
 
 
 class RegistrationSerializer(serializers.ModelSerializer):

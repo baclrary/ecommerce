@@ -9,7 +9,6 @@ class HomePage(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu_categories'] = Category.objects.all()
         context['new_products'] = Product.objects.filter(is_active=True).order_by('-id')[:5]
         context['top_products'] = Product.objects.annotate(review_count=Count('reviews')).filter(review_count__gt=0,
                                                                                                  is_active=True).order_by(

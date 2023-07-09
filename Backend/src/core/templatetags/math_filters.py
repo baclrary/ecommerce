@@ -36,3 +36,8 @@ def round_half(value):
     Takes a float value and rounds it to the nearest half number (0.5 increment).
     """
     return round(value * 2) / 2
+
+
+@register.filter
+def subtract(value, arg):
+    return value - arg

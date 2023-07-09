@@ -76,7 +76,8 @@ class Product(models.Model):
         ordering = ('-created_at',)
 
     def __str__(self):
-        return self.title
+        attributes = ' / '.join(product_attribute.value for product_attribute in self.attributes.all())
+        return f"{self.title} {attributes}"
 
     @property
     def price(self):

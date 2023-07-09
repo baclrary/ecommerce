@@ -9,6 +9,8 @@ from order.models import Order, OrderItem
 from order.serializer import OrderSerializer, OrderUpdateSerializer, OrderItemSerializer
 
 
+from django.views import generic
+
 class MyPagination(PageNumberPagination):
     page_size = 3  # Кількість об'єктів на сторінці
     page_query_param = 'page'
@@ -90,3 +92,7 @@ class TopSalesAPIView(viewsets.ModelViewSet):
         top_sales = serializer.get_top_sales(limit=10)  # Приклад: отримати 10 товарів з топ продажів
 
         return Response(ProductSerializer(top_sales, many=True).data)
+    
+
+# class OrderListView(generic.ListView):
+#     model = Order

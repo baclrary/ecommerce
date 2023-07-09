@@ -2,11 +2,11 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 
-from .models import User, BuyerProfile, SellerProfile
+from .models import CustomUser, BuyerProfile, SellerProfile
 
 
 class ProfileInline(admin.StackedInline):
-    model = User.profile.related.related_model  # This will get the related Profile model (BuyerProfile or SellerProfile)
+    model = CustomUser.profile.related.related_model  # This will get the related Profile model (BuyerProfile or SellerProfile)
     can_delete = False
     verbose_name_plural = 'Profile'
     fk_name = 'user'
@@ -34,10 +34,11 @@ class CustomUserAdmin(UserAdmin):
 
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ['user', 'name', 'surname']
-    search_fields = ['user__email', 'name', 'surname']  # search by email, name or surname
+    list_display = ['user', 'first_name', 'middle_name', 'last_name']
+    search_fields = ['user__email', 'first_name', 'middle_name',
+                     'last_name']  # search by email, name, middle name or last name
 
 
-admin.site.register(User, CustomUserAdmin)
+admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(BuyerProfile, ProfileAdmin)
 admin.site.register(SellerProfile, ProfileAdmin)

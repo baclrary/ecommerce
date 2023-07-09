@@ -29,10 +29,11 @@ django-tailwind = "*"
 python_version = "3.10"
 
 [scripts]
-dev-server = "python manage.py runserver"
+dev = "python manage.py runserver"
 makemigrations = "python manage.py makemigrations"
 migrate = "python manage.py migrate"
 createsuperuser = "python manage.py createsuperuser"
 shell = "python manage.py shell"
 collectstatic = "python manage.py collectstatic"
 tailwind = "python manage.py tailwind start"
+#tests = "python manage.py test catalog.tests"

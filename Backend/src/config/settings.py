@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "django.contrib.postgres",
     'rest_framework_simplejwt',
     'rest_framework',
+    'authentication',
     'drf_yasg',
     'psycopg2',
     'cart',
@@ -95,6 +96,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'config.context_processors.site_settings'
             ],
         },
     },
@@ -148,10 +150,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "/static/"
+STATIC_URL = "/staticfiles/"
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = (
   os.path.join(BASE_DIR, 'media'),
+  os.path.join(BASE_DIR, 'templates'),
+
 )
 
 # Default primary key field type
@@ -159,7 +163,7 @@ STATICFILES_DIRS = (
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = "users.User"
+AUTH_USER_MODEL = "users.CustomUser"
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -203,3 +207,7 @@ TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+
+LOGIN_URL = 'authentication:login'
+

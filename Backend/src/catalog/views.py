@@ -13,14 +13,6 @@ from django.views import generic
 from review.forms import ReviewForm
 
 
-def get_menu_categories():
-    """
-    Returns a queryset containing all Category objects.
-    This is used for populating the menu in various views.
-    """
-    return Category.objects.all()
-
-
 class CategoriesList(generic.ListView):
     """
     This view handles displaying a list of all Categories.
@@ -28,11 +20,6 @@ class CategoriesList(generic.ListView):
     template_name = 'catalog/categories_list.html'
     model = Category
     context_object_name = 'categories'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['menu_categories'] = get_menu_categories()
-        return context
 
 
 class SubCategoriesList(generic.ListView):
@@ -50,11 +37,6 @@ class SubCategoriesList(generic.ListView):
         """
         category = get_object_or_404(Category, slug=self.kwargs['category_slug'])
         return SubCategory.objects.filter(category=category)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['menu_categories'] = get_menu_categories()
-        return context
 
 
 class SubCategoryDetail(generic.DetailView):
@@ -81,7 +63,6 @@ class SubCategoryDetail(generic.DetailView):
         context = super().get_context_data(**kwargs)
         context['attributes'] = self.get_attributes_for_subcategory()
         context['category_slug'] = self.kwargs['category_slug']
-        context['menu_categories'] = get_menu_categories()
         context['products'] = self.get_filtered_products_for_subcategory()
 
         return context
@@ -137,7 +118,6 @@ class ProductDetail(generic.DetailView):
         - An empty Review form.
         """
         context = super().get_context_data(**kwargs)
-        context['menu_categories'] = get_menu_categories()
         context['attributes'] = self.get_attributes_for_product()
         context['reviews'] = self.get_reviews_for_product()
         context['review_form'] = self.get_review_form()

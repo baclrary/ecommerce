@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from catalog.models import Product
-from core.models import BuyerProfile
+from users.models import BuyerProfile
 from order.models import Order, OrderItem
 
 

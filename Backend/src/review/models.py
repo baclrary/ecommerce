@@ -21,3 +21,7 @@ class Review(models.Model):
 
     def __str__(self):
         return f'"{self.title}" for "{self.product.title}" by {self.user.email}'
+
+    @staticmethod
+    def get_user_total_reviews_count(user: get_user_model()):
+        return Review.objects.filter(user=user).count()

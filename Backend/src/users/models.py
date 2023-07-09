@@ -10,7 +10,7 @@ from users.managers import CustomUserManager
 from distribution.models import EmailDistribution
 
 
-class User(AbstractBaseUser, PermissionsMixin):
+class CustomUser(AbstractBaseUser, PermissionsMixin):
     """
     A custom user model where the unique identifier is email address.
     Inherits from Django's AbstractBaseUser and PermissionsMixin for
@@ -55,6 +55,28 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = CustomUserManager()
 
+    @staticmethod
+    def create_profile(user, first_name, last_name, middle_name=None):
+        return Profile.objects.create(user=user, first_name=first_name, middle_name=middle_name, last_name=last_name)
+
+    @staticmethod
+    def get_by_id(user_id):
+        custom_user = CustomUser.objects.filter(id=user_id).first()
+        return custom_user if custom_user else None
+
+    @staticmethod
+    def get_by_email(email):
+        custom_user = CustomUser.objects.filter(email=email).first()
+        return custom_user if custom_user else None
+
+    @staticmethod
+    def delete_by_id(user_id):
+        user_to_delete = CustomUser.objects.filter(id=user_id).first()
+        if user_to_delete:
+            CustomUser.objects.filter(id=user_id).delete()
+            return True
+        return False
+
 
 class Profile(models.Model):
     """
@@ -67,14 +89,20 @@ class Profile(models.Model):
         null=False,
         blank=False,
     )
-    name = models.CharField(
-        _("name"),
+    first_name = models.CharField(
+        _("first name"),
         max_length=256,
         null=True,
         blank=False,
     )
-    surname = models.CharField(
-        _("surname"),
+    middle_name = models.CharField(
+        _("middle name"),
+        max_length=256,
+        null=True,
+        blank=True,
+    )
+    last_name = models.CharField(
+        _("last name"),
         max_length=256,
         null=True,
         blank=False,
@@ -88,6 +116,12 @@ class Profile(models.Model):
     distributions = models.ManyToManyField(
         EmailDistribution, blank=True
     )
+
+    def __str__(self):
+        if self.middle_name:
+            return f"{self.first_name} {self.middle_name} {self.last_name}"
+        else:
+            return f"{self.first_name} {self.last_name}"
 
 
 class BuyerProfile(Profile):
