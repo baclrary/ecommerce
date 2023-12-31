@@ -1,0 +1,37 @@
+{% load static %}
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ecommerce</title>
+    <link rel="icon" href="{% static 'assets/favicon.ico' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/catalog/product/scrollbar.css' %}">
+
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    {% tailwind_css %}
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+          rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+</head>
+<body class=''>
+{% include 'components/header.html' %}
+{% include 'messages.html' %}
+{% block content %}
+    {% include 'pages/welcome.html' %}
+    {% include 'components/slider.html' %}
+    {% include 'components/new_products.html' %}
+    {% include 'components/top_products.html' %}
+{% endblock content %}
+{% include 'components/footer.html' %}
+</body>
+
+<script src="{% static 'js/hide_messages.js' %}"></script>
+</html>

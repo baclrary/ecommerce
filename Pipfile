@@ -1,0 +1,45 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+psycopg2 = "*"
+django-phonenumber-field = {extras = ["phonenumbers"], version = "*"}
+pillow = "*"
+python-dotenv = "*"
+djangorestframework = "*"
+drf-yasg = "*"
+djangorestframework-simplejwt = "*"
+celery = "*"
+redis = "*"
+django-celery-beat = "*"
+tzdata = "*"
+stripe = "*"
+pyttsx3 = "*"
+speechrecognition = "*"
+pyaudio = "*"
+#django-cors-headers = "*"
+django-tailwind = "*"
+django-guardian = "*"
+moviepy = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"
+
+[scripts]
+py = "python apps/manage.py"
+dev = "python apps/manage.py runserver"
+makemigrations = "python apps/manage.py makemigrations"
+migrate = "python apps/manage.py migrate"
+createsuperuser = "python apps/manage.py createsuperuser"
+shell = "python apps/manage.py shell"
+collectstatic = "python apps/manage.py collectstatic"
+tailwind = "python apps/manage.py tailwind start"
+tailwind_init = "python apps/manage.py tailwind init"
+tailwind_install = "python apps/manage.py tailwind install"
+
+#tests = "python apps/manage.py test catalog.tests"

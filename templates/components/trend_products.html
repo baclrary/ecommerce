@@ -1,0 +1,293 @@
+<!--
+  This example requires Tailwind CSS v2.0+ 
+  
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/aspect-ratio'),
+    ],
+  }
+  ```
+-->
+<div class="bg-white">
+  <div class="py-16 sm:py-12 lg:mx-auto lg:max-w-7xl lg:px-8">
+    <div class="flex items-center justify-between px-4 sm:px-6 lg:px-0">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900">TRENDING PRODUCTS</h2>
+{#      <a href="#" class="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block">#}
+{#        See everything#}
+{#        <span aria-hidden="true"> &rarr;</span>#}
+{#      </a>#}
+    </div>
+
+    <div class="relative mt-8">
+      <div class="relative -mb-6 w-full overflow-x-auto pb-6">
+        <ul role="list" class="mx-4 inline-flex space-x-8 sm:mx-6 lg:mx-0 lg:grid lg:grid-cols-4 lg:gap-x-8 lg:space-x-0">
+          <li class="mb-8 inline-flex w-64 flex-col text-center lg:w-auto">
+            <div class="group relative">
+              <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200">
+                <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-product-01.jpg" alt="Black machined steel pen with hexagonal grip and small white logo at top." class="h-full w-full object-cover object-center group-hover:opacity-75">
+              </div>
+              <div class="mt-6">
+                <p class="text-sm text-gray-500">Black</p>
+                <h3 class="mt-1 font-semibold text-gray-900">
+                  <a href="#">
+                    <span class="absolute inset-0"></span>
+                    Machined Pen
+                  </a>
+                </h3>
+                <p class="mt-1 text-gray-900">$35</p>
+              </div>
+            </div>
+
+            <h4 class="sr-only">Available colors</h4>
+            <ul role="list" class="mt-auto flex items-center justify-center space-x-3 pt-6">
+              <li class="h-4 w-4 rounded-full border border-black border-opacity-10" style="background-color: #111827">
+                <span class="sr-only"> Black </span>
+              </li>
+
+              <li class="h-4 w-4 rounded-full border border-black border-opacity-10" style="background-color: #fde68a">
+                <span class="sr-only"> Brass </span>
+              </li>
+
+              <li class="h-4 w-4 rounded-full border border-black border-opacity-10" style="background-color: #e5e7eb">
+                <span class="sr-only"> Chrome </span>
+              </li>
+            </ul>
+              <div class="mt-6 flex flex-col items-center">
+            <p class="sr-only">5 out of 5 stars</p>
+            <div class="flex items-center">
+              <!-- Heroicon name: mini/star -->
+              <svg class="text-yellow-400 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+              </svg>
+
+              <!-- Heroicon name: mini/star -->
+              <svg class="text-yellow-400 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+              </svg>
+
+              <!-- Heroicon name: mini/star -->
+              <svg class="text-yellow-400 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+              </svg>
+
+              <!-- Heroicon name: mini/star -->
+              <svg class="text-yellow-400 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+              </svg>
+
+              <!-- Heroicon name: mini/star -->
+              <svg class="text-yellow-400 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <p class="mt-1 text-sm text-gray-500">38 reviews</p>
+          </div>
+
+          </li>
+          <li class="mb-8 inline-flex w-64 flex-col text-center lg:w-auto">
+            <div class="group relative">
+              <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200">
+                <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-product-01.jpg" alt="Black machined steel pen with hexagonal grip and small white logo at top." class="h-full w-full object-cover object-center group-hover:opacity-75">
+              </div>
+              <div class="mt-6">
+                <p class="text-sm text-gray-500">Black</p>
+                <h3 class="mt-1 font-semibold text-gray-900">
+                  <a href="#">
+                    <span class="absolute inset-0"></span>
+                    Machined Pen
+                  </a>
+                </h3>
+                <p class="mt-1 text-gray-900">$35</p>
+              </div>
+            </div>
+
+            <h4 class="sr-only">Available colors</h4>
+            <ul role="list" class="mt-auto flex items-center justify-center space-x-3 pt-6">
+              <li class="h-4 w-4 rounded-full border border-black border-opacity-10" style="background-color: #111827">
+                <span class="sr-only"> Black </span>
+              </li>
+
+              <li class="h-4 w-4 rounded-full border border-black border-opacity-10" style="background-color: #fde68a">
+                <span class="sr-only"> Brass </span>
+              </li>
+
+              <li class="h-4 w-4 rounded-full border border-black border-opacity-10" style="background-color: #e5e7eb">
+                <span class="sr-only"> Chrome </span>
+              </li>
+            </ul>
+              <div class="mt-6 flex flex-col items-center">
+            <p class="sr-only">5 out of 5 stars</p>
+            <div class="flex items-center">
+              <!-- Heroicon name: mini/star -->
+              <svg class="text-yellow-400 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+              </svg>
+
+              <!-- Heroicon name: mini/star -->
+              <svg class="text-yellow-400 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+              </svg>
+
+              <!-- Heroicon name: mini/star -->
+              <svg class="text-yellow-400 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+              </svg>
+
+              <!-- Heroicon name: mini/star -->
+              <svg class="text-yellow-400 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+              </svg>
+
+              <!-- Heroicon name: mini/star -->
+              <svg class="text-yellow-400 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <p class="mt-1 text-sm text-gray-500">38 reviews</p>
+          </div>
+
+          </li>
+          <li class="mb-8 inline-flex w-64 flex-col text-center lg:w-auto">
+            <div class="group relative">
+              <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200">
+                <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-product-01.jpg" alt="Black machined steel pen with hexagonal grip and small white logo at top." class="h-full w-full object-cover object-center group-hover:opacity-75">
+              </div>
+              <div class="mt-6">
+                <p class="text-sm text-gray-500">Black</p>
+                <h3 class="mt-1 font-semibold text-gray-900">
+                  <a href="#">
+                    <span class="absolute inset-0"></span>
+                    Machined Pen
+                  </a>
+                </h3>
+                <p class="mt-1 text-gray-900">$35</p>
+              </div>
+            </div>
+
+            <h4 class="sr-only">Available colors</h4>
+            <ul role="list" class="mt-auto flex items-center justify-center space-x-3 pt-6">
+              <li class="h-4 w-4 rounded-full border border-black border-opacity-10" style="background-color: #111827">
+                <span class="sr-only"> Black </span>
+              </li>
+
+              <li class="h-4 w-4 rounded-full border border-black border-opacity-10" style="background-color: #fde68a">
+                <span class="sr-only"> Brass </span>
+              </li>
+
+              <li class="h-4 w-4 rounded-full border border-black border-opacity-10" style="background-color: #e5e7eb">
+                <span class="sr-only"> Chrome </span>
+              </li>
+            </ul>
+              <div class="mt-6 flex flex-col items-center">
+            <p class="sr-only">5 out of 5 stars</p>
+            <div class="flex items-center">
+              <!-- Heroicon name: mini/star -->
+              <svg class="text-yellow-400 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+              </svg>
+
+              <!-- Heroicon name: mini/star -->
+              <svg class="text-yellow-400 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+              </svg>
+
+              <!-- Heroicon name: mini/star -->
+              <svg class="text-yellow-400 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+              </svg>
+
+              <!-- Heroicon name: mini/star -->
+              <svg class="text-yellow-400 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+              </svg>
+
+              <!-- Heroicon name: mini/star -->
+              <svg class="text-yellow-400 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <p class="mt-1 text-sm text-gray-500">38 reviews</p>
+          </div>
+
+          </li>
+          <li class="mb-8 inline-flex w-64 flex-col text-center lg:w-auto">
+            <div class="group relative">
+              <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200">
+                <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-product-01.jpg" alt="Black machined steel pen with hexagonal grip and small white logo at top." class="h-full w-full object-cover object-center group-hover:opacity-75">
+              </div>
+              <div class="mt-6">
+                <p class="text-sm text-gray-500">Black</p>
+                <h3 class="mt-1 font-semibold text-gray-900">
+                  <a href="#">
+                    <span class="absolute inset-0"></span>
+                    Machined Pen
+                  </a>
+                </h3>
+                <p class="mt-1 text-gray-900">$35</p>
+              </div>
+            </div>
+
+            <h4 class="sr-only">Available colors</h4>
+            <ul role="list" class="mt-auto flex items-center justify-center space-x-3 pt-6">
+              <li class="h-4 w-4 rounded-full border border-black border-opacity-10" style="background-color: #111827">
+                <span class="sr-only"> Black </span>
+              </li>
+
+              <li class="h-4 w-4 rounded-full border border-black border-opacity-10" style="background-color: #fde68a">
+                <span class="sr-only"> Brass </span>
+              </li>
+
+              <li class="h-4 w-4 rounded-full border border-black border-opacity-10" style="background-color: #e5e7eb">
+                <span class="sr-only"> Chrome </span>
+              </li>
+            </ul>
+              <div class="mt-6 flex flex-col items-center">
+            <p class="sr-only">5 out of 5 stars</p>
+            <div class="flex items-center">
+              <!-- Heroicon name: mini/star -->
+              <svg class="text-yellow-400 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+              </svg>
+
+              <!-- Heroicon name: mini/star -->
+              <svg class="text-yellow-400 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+              </svg>
+
+              <!-- Heroicon name: mini/star -->
+              <svg class="text-yellow-400 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+              </svg>
+
+              <!-- Heroicon name: mini/star -->
+              <svg class="text-yellow-400 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+              </svg>
+
+              <!-- Heroicon name: mini/star -->
+              <svg class="text-yellow-400 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <p class="mt-1 text-sm text-gray-500">38 reviews</p>
+          </div>
+
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-12 flex px-4 sm:hidden">
+      <a href="#" class="text-sm font-semibold text-indigo-600 hover:text-indigo-500">
+        See everything
+        <span aria-hidden="true"> &rarr;</span>
+      </a>
+    </div>
+  </div>
+</div>

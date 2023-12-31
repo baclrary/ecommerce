@@ -1,0 +1,126 @@
+{% load static %}
+{% load math_filters %}
+{% load files_filters %}
+{% load dict_filters %}
+{% for review in reviews %}
+    <div class="flex space-x-4 text-sm text-gray-500 ">
+        <div class="flex-none py-10">
+            <img src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80"
+                 alt="" class="h-10 w-10 rounded-full bg-gray-100">
+        </div>
+        <div class="py-10">
+            <h3 class="font-medium text-gray-900">{{ review.user.email }}</h3>
+            <p>
+                <time datetime="2021-07-16">{{ review.created_at|date:"F j, Y" }}</time>
+            </p>
+            <div class="mt-4 flex items-center">
+                {% for i in review.rating|full_stars %}
+                    <svg class="text-yellow-400 h-5 w-5 flex-shrink-0"
+                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                         fill="currentColor"
+                         aria-hidden="true">
+                        <path fill-rule="evenodd"
+                              d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
+                              clip-rule="evenodd"/>
+                    </svg>
+                {% endfor %}
+            </div>
+            <div>
+                {#                <p class="sr-only">{{ review.rating }} out of 5 stars</p>#}
+                {#                The elemen sr-only is causing layout problem generating a lot of blankspace after footer #}
+                <div class="prose prose-sm mt-4 font-bold text-gray-800">
+                    <p>{{ review.title }}</p>
+                </div>
+                <div class="prose prose-sm mt-2 text-gray-700">
+                    <p>{{ review.review_text|linebreaks }}</p>
+                </div>
+            </div>
+
+            {% if review.media_files.all %}
+                <hr class="border-gray-300 my-5">
+            <div class="container flex mx-auto">
+                <div class="flex flex-wrap space-x-5 bg-gray-50 mb-2">
+                    {% for media in review.media_files.all %}
+                        {% if media.media_type == 'image' %}
+                            <div class="overflow-hidden parent-container">
+                                {#                                <a href="{{ media.file.url }}" data-lightbox="review-media-{{ review.id }}">#}
+                                {#                                    <img class="max-w-xxs max-h-xxs h-20 w-20 object-cover contain rounded"#}
+                                {#                                         src="{{ media.file.url }}"#}
+                                {#                                         alt="Review image">#}
+                                {#                                </a>#}
+                                <a class="image-link" href="{{ media.file.url }}">
+                                    <img class="max-w-xxs max-h-xxs h-20 w-20 object-cover contain rounded"
+                                         src="{{ media.file.url }}"
+                                         alt="Review image">
+                                </a>
+                            </div>
+                        {% elif media.media_type == 'video' %}
+                            {% with ext=media.file|extension %}
+                                <div class="overflow-hidden">
+                                    <a href="#video-content-{{ media.id }}" class="video-link">
+                                        <video class="max-w-xxs max-h-xxs h-20 w-20 object-cover contain rounded">
+                                            <source src="{{ media.file.url }}" type="video/{{ ext }}">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </a>
+                                    <div id="video-content-{{ media.id }}"
+                                         class="mfp-hide flex justify-center items-center">
+                                        <video class="video-popup w-1/2 h-1/2" controls>
+                                            <source src="{{ media.file.url }}" type="video/{{ ext }}">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                </div>
+                            {% endwith %}
+                        {% else %}
+                            <p>Unsupported file format: {{ media.content_type }}</p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <div id="reactions" class="flex items-center mt-4">
+                <button class="like-btn" data-review="{{ review.id }}" data-model="review">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                         class="h-4 w-4 mr-1 text-gray-500 {% if user_reactions.reviews|get_item:review.id == "like" %} text-emerald-600 {% endif %}">
+                        <path d="M8 10V20M8 10L4 9.99998V20L8 20M8 10L13.1956 3.93847C13.6886 3.3633 14.4642 3.11604 15.1992 3.29977L15.2467 3.31166C16.5885 3.64711 17.1929 5.21057 16.4258 6.36135L14 9.99998H18.5604C19.8225 9.99998 20.7691 11.1546 20.5216 12.3922L19.3216 18.3922C19.1346 19.3271 18.3138 20 17.3604 20L8 20"
+                              stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <span
+                        class="likes-{{ review.id }} mr-4 text-emerald-600">{{ review.get_reactions_counts.likes }}</span>
+                <span
+                        class="dislikes-{{ review.id }} mr-2 text-pink-600">{{ review.get_reactions_counts.dislikes }}</span>
+
+                <button class="dislike-btn" data-review="{{ review.id }}" data-model="review">
+                    <svg xmlns="http://www.w3.org/2000/svg" stroke="currentColor" fill="none"
+                         xmlns:xlink="http://www.w3.org/1999/xlink"
+                         viewBox="0 0 1000 1000"
+                         class="h-3 w-3 mr-2 text-gray-500 hover:text-pink-600 {% if user_reactions.reviews|get_item:review.id == "dislike" %} text-pink-600 {% endif %}">
+                        <g transform="matrix(-54.2417 0 0 -54.2417 500.0003 500.0002)" id="690888">
+                            <path
+                                    stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                                    vector-effect="non-scaling-stroke"
+                                    transform=" translate(-12.2806, -11.62)"
+                                    d="M 8 10 V 20 M 8 10 L 4 9.99998 V 20 L 8 20 M 8 10 L 13.1956 3.93847 C 13.6886 3.3633 14.4642 3.11604 15.1992 3.29977 L 15.2467 3.31166 C 16.5885 3.64711 17.1929 5.21057 16.4258 6.36135 L 14 9.99998 H 18.5604 C 19.8225 9.99998 20.7691 11.1546 20.5216 12.3922 L 19.3216 18.3922 C 19.1346 19.3271 18.3138 20 17.3604 20 L 8 20">
+                            </path>
+                        </g>
+                    </svg>
+                </button>
+                <span class="px-2 border-gray-300">|</span>
+                <button class="reply-btn mr-3 text-indigo-600" data-user-id="{{ request.user.id }}" data-user-email="{{ request.user.email }}"  data-review-id="{{ review.id }}" data-parent-reply-id="null">Reply</button>
+
+            </div>
+
+            <!-- replies rendering -->
+            <div class="mt-4 ml-4 rounded p-2">
+                {% for reply in review.replies_to_review.all %}
+                    {% include "catalog/_reply.html" with reply=reply margin=4 %}
+                {% endfor %}
+            </div>
+            <!-- end of replies rendering -->
+        </div>
+    </div>
+{% endfor %}
+

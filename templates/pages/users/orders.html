@@ -1,0 +1,263 @@
+{% extends 'pages/users/settings.html' %}
+{% load math_filters %}
+
+{% block profile %}
+    <div class="bg-white">
+        <div class="">
+            <div class="mx-auto max-w-7xl sm:px-2 lg:px-8">
+                <div class="mx-auto max-w-2xl px-4 lg:max-w-4xl lg:px-0">
+                    <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Orders history</h1>
+                    <p class="mt-2 text-sm text-gray-500">Check the status of recent orders, manage returns, and
+                        discover similar products.</p>
+                </div>
+            </div>
+
+            <div class="mt-10">
+                <h2 class="sr-only">Recent orders</h2>
+                {% if user_orders.count > 1 %}
+                    {% for user_order in user_orders %}
+                    {% endfor %}
+                {% elif user_orders.count == 0 %}
+                    <div>No orders</div>
+                {% else %}
+                    {% with order=user_orders.0 %}
+                        <div class="mx-auto max-w-7xl sm:px-2 lg:px-8 mb-10">
+                            <div class="mx-auto max-w-2xl space-y-8 sm:px-4 lg:max-w-4xl lg:px-0">
+                                <div class="border-t border-b border-gray-200 bg-white shadow-sm sm:rounded-lg sm:border">
+                                    <h3 class="sr-only">Order placed on
+                                        <time datetime="2021-07-06">Jul 6, 2021</time>
+                                    </h3>
+
+                                    <div class="flex items-center border-b border-gray-200 p-4 sm:grid sm:grid-cols-4 sm:gap-x-6 sm:p-6">
+                                        <dl class="grid flex-1 grid-cols-2 gap-x-6 text-sm sm:col-span-3 sm:grid-cols-3 lg:col-span-2">
+                                            <div>
+                                                <dt class="font-medium text-gray-900">Order number</dt>
+                                                <dd class="mt-1 text-gray-500">{{ order.order_number }}</dd>
+                                            </div>
+                                            <div class="hidden sm:block">
+                                                <dt class="font-medium text-gray-900">Date placed</dt>
+                                                <dd class="mt-1 text-gray-500">
+                                                    <time datetime="{{ order.ordered_at }}">{{ order.ordered_at }}</time>
+                                                </dd>
+                                            </div>
+                                            <div>
+                                                <dt class="font-medium text-gray-900">Total amount</dt>
+                                                <dd class="mt-1 font-medium text-gray-500">₴ {{ order.total_sum|floatformat }}</dd>
+                                            </div>
+                                        </dl>
+
+                                        <div class="relative flex justify-end lg:hidden">
+                                            <div class="flex items-center">
+                                                <button type="button"
+                                                        class="-m-2 flex items-center p-2 text-gray-400 hover:text-gray-500"
+                                                        id="menu-0-button" aria-expanded="false" aria-haspopup="true">
+                                                    <span class="sr-only">Options for order {{ order.order_number }}</span>
+                                                    <!-- Heroicon name: outline/ellipsis-vertical -->
+                                                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                         aria-hidden="true">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                              d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+
+                                            <!--
+                                              Dropdown menu, show/hide based on menu state.
+
+                                              Entering: "transition ease-out duration-100"
+                                                From: "transform opacity-0 scale-95"
+                                                To: "transform opacity-100 scale-100"
+                                              Leaving: "transition ease-in duration-75"
+                                                From: "transform opacity-100 scale-100"
+                                                To: "transform opacity-0 scale-95"
+                                            -->
+                                            <div class="absolute right-0 z-10 mt-2 w-40 origin-bottom-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                                 role="menu" aria-orientation="vertical" aria-labelledby="menu-0-button"
+                                                 tabindex="-1">
+                                                <div class="py-1" role="none">
+                                                    <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                                                    <a href="#" class="text-gray-700 block px-4 py-2 text-sm"
+                                                       role="menuitem"
+                                                       tabindex="-1" id="menu-0-item-0">View</a>
+                                                    <a href="#" class="text-gray-700 block px-4 py-2 text-sm"
+                                                       role="menuitem"
+                                                       tabindex="-1" id="menu-0-item-1">Invoice</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="hidden lg:col-span-2 lg:flex lg:items-center lg:justify-end lg:space-x-4">
+                                            <a href="#"
+                                               class="flex items-center justify-center rounded-md border border-gray-300 bg-white py-2 px-2.5 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                                <span>View Order</span>
+                                                <span class="sr-only">{{ order.order_number }}</span>
+                                            </a>
+                                            <a href="#"
+                                               class="flex items-center justify-center rounded-md border border-gray-300 bg-white py-2 px-2.5 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                                <span>View Invoice</span>
+                                                <span class="sr-only">for order {{ order.order_number }}</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- Products -->
+                                    <h4 class="sr-only">Items</h4>
+                                    <ul role="list" class="divide-y divide-gray-200">
+                                        {% for order_item in order.orderitem_set.all %}
+                                            {% if forloop.counter <= 3 %}
+                                                <li class="p-4 sm:p-6">
+                                                    <div class="flex items-center sm:items-start">
+                                                        <div class="h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg sm:h-40 sm:w-40">
+                                                            <img src="{{ order_item.product.image.url }}"
+                                                                 alt="Moss green canvas compact backpack with double top zipper, zipper front pouch, and matching carry handle and backpack straps."
+                                                                 class="h-full w-full object-contain object-center">
+                                                        </div>
+                                                        <div class="ml-6 flex-1 text-sm">
+                                                            <div class="font-medium text-gray-900 sm:flex sm:justify-between">
+                                                                <h5>{{ order_item.product }}</h5>
+                                                                <p class="mt-2 sm:mt-0">₴{{ order_item.price|floatformat }}</p>
+                                                            </div>
+                                                            <div class="mt-2 text-gray-600">
+                                                                <p class="sm:mt-0">
+                                                                    Quantity: {{ order_item.quantity }}</p>
+
+                                                            </div>
+                                                            <p class="hidden text-gray-500 sm:mt-2 sm:block">{{ order_item.product.description }}</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mt-8 sm:flex sm:justify-between">
+                                                        <div class="flex items-center">
+                                                            {% if order.closed_at or order.status == 'closed' %}
+                                                                <!-- Heroicon name: mini/check-circle -->
+                                                                <svg class="h-5 w-5 text-green-500"
+                                                                     xmlns="http://www.w3.org/2000/svg"
+                                                                     viewBox="0 0 20 20" fill="currentColor"
+                                                                     aria-hidden="true">
+                                                                    <path fill-rule="evenodd"
+                                                                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                                                          clip-rule="evenodd"/>
+                                                                </svg>
+                                                                <p class="ml-2 text-sm font-medium text-gray-500">
+                                                                    {% if order.closed_at %}
+                                                                        Delivered on
+                                                                        <time datetime="2021-07-12">
+                                                                        {{ order.closed_at }}
+                                                                    {% else %}
+                                                                        Delivered
+                                                                    {% endif %}</time>
+                                                                </p>
+                                                            {% elif order.status == 'open' %}
+                                                                <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                                                                <svg class="h-4 w-4 text-gray-500" fill="currentColor"
+                                                                     aria-hidden="true"
+                                                                     viewBox="0 0 24 24"
+                                                                     xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M24,12A12,12,0,0,1,0,12a1,1,0,0,1,2,0A10,10,0,1,0,12,2a1,1,0,0,1,0-2A12.013,12.013,0,0,1,24,12ZM10.277,11H8a1,1,0,0,0,0,2h2.277A1.994,1.994,0,1,0,13,10.277V7a1,1,0,0,0-2,0v3.277A2,2,0,0,0,10.277,11ZM1.827,8.784a1,1,0,1,0-1-1A1,1,0,0,0,1.827,8.784ZM4.221,5.207a1,1,0,1,0-1-1A1,1,0,0,0,4.221,5.207ZM7.779,2.841a1,1,0,1,0-1-1A1,1,0,0,0,7.779,2.841Z"/>
+                                                                </svg>
+                                                                <p class="ml-2 text-sm font-medium text-gray-500">
+                                                                    Status: {{ order.get_status_display|title }}
+                                                                </p>
+
+                                                            {% elif order.status == 'in_progress' %}
+                                                                <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                                                                <svg class="h-4 w-4 text-yellow-500" fill="currentColor"
+                                                                     aria-hidden="true"
+                                                                     viewBox="0 0 36 36"
+                                                                     preserveAspectRatio="xMidYMid meet"
+                                                                     xmlns="http://www.w3.org/2000/svg"
+                                                                     xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                                    <title>process-on-vm-line</title>
+                                                                    <path d="M33.49,26.28a1,1,0,0,0-1.2-.7l-2.49.67a14.23,14.23,0,0,0,2.4-6.75A14.48,14.48,0,0,0,27.37,7.35,1,1,0,0,0,26,7.44a1,1,0,0,0,.09,1.41,12.45,12.45,0,0,1,4.16,10.46,12.19,12.19,0,0,1-2,5.74L28,22.54a1,1,0,1,0-1.95.16l.5,6.44,6.25-1.66A1,1,0,0,0,33.49,26.28Z"
+                                                                          class="clr-i-outline clr-i-outline-path-1"></path>
+                                                                    <path d="M4.31,17.08a1.06,1.06,0,0,0,.44.16,1,1,0,0,0,1.12-.85A12.21,12.21,0,0,1,18.69,5.84L16.45,7.37a1,1,0,0,0,.47,1.79A1,1,0,0,0,17.56,9l5.33-3.66L18.33.76a1,1,0,1,0-1.39,1.38l1.7,1.7A14.2,14.2,0,0,0,3.89,16.12,1,1,0,0,0,4.31,17.08Z"
+                                                                          class="clr-i-outline clr-i-outline-path-2"></path>
+                                                                    <path d="M21.73,29.93a12,12,0,0,1-4.84.51,12.3,12.3,0,0,1-9.57-6.3l2.49.93a1,1,0,0,0,.69-1.84l-4.59-1.7h0L4.44,21,3.33,27.35a1,1,0,0,0,.79,1.13l.17,0a1,1,0,0,0,1-.81l.42-2.4a14.3,14.3,0,0,0,11,7.14,13.91,13.91,0,0,0,5.63-.6,1,1,0,0,0-.6-1.9Z"
+                                                                          class="clr-i-outline clr-i-outline-path-3"></path>
+                                                                    <path d="M22,13H14a1,1,0,0,0-1,1v8a1,1,0,0,0,1,1h8a1,1,0,0,0,1-1V14A1,1,0,0,0,22,13Zm-1,8H15V15h6Z"
+                                                                          class="clr-i-outline clr-i-outline-path-4"></path>
+                                                                    <rect x="0" y="0" width="36" height="36"
+                                                                          fill-opacity="0"/>
+                                                                </svg>
+                                                                <?xml version="1.0" encoding="utf-8"?>
+                                                                <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                                                                <p class="ml-2 text-sm font-medium text-gray-500">
+                                                                    Status: {{ order.get_status_display|title }}
+                                                                </p>
+
+                                                            {% elif order.status == 'delivering' %}
+                                                                <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                                                                <svg class="h-4 w-4 text-green-400" fill="currentColor"
+                                                                     aria-hidden="true"
+                                                                     viewBox="0 0 32 32"
+                                                                     xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M 0 6 L 0 8 L 19 8 L 19 23 L 12.84375 23 C 12.398438 21.28125 10.851563 20 9 20 C 7.148438 20 5.601563 21.28125 5.15625 23 L 4 23 L 4 18 L 2 18 L 2 25 L 5.15625 25 C 5.601563 26.71875 7.148438 28 9 28 C 10.851563 28 12.398438 26.71875 12.84375 25 L 21.15625 25 C 21.601563 26.71875 23.148438 28 25 28 C 26.851563 28 28.398438 26.71875 28.84375 25 L 32 25 L 32 16.84375 L 31.9375 16.6875 L 29.9375 10.6875 L 29.71875 10 L 21 10 L 21 6 Z M 1 10 L 1 12 L 10 12 L 10 10 Z M 21 12 L 28.28125 12 L 30 17.125 L 30 23 L 28.84375 23 C 28.398438 21.28125 26.851563 20 25 20 C 23.148438 20 21.601563 21.28125 21.15625 23 L 21 23 Z M 2 14 L 2 16 L 8 16 L 8 14 Z M 9 22 C 10.117188 22 11 22.882813 11 24 C 11 25.117188 10.117188 26 9 26 C 7.882813 26 7 25.117188 7 24 C 7 22.882813 7.882813 22 9 22 Z M 25 22 C 26.117188 22 27 22.882813 27 24 C 27 25.117188 26.117188 26 25 26 C 23.882813 26 23 25.117188 23 24 C 23 22.882813 23.882813 22 25 22 Z"/>
+                                                                </svg>
+                                                                <p class="ml-2 text-sm font-medium text-gray-500">
+                                                                    Status: {{ order.get_status_display|title }}
+                                                                </p>
+                                                            {% elif order.status == 'canceled' %}
+                                                                <?xml version="1.0" encoding="iso-8859-1"?>
+                                                                <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                                                                <svg class="h-3 w-3 text-red-500" fill="currentColor"
+                                                                     aria-hidden="true"
+                                                                     version="1.1" id="Layer_1"
+                                                                     xmlns="http://www.w3.org/2000/svg"
+                                                                     xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                     viewBox="0 0 512 512" xml:space="preserve">
+                                                            <g>
+                                                                <g>
+                                                                    <path d="M286.17,256L505.752,36.418c8.331-8.331,8.331-21.839,0-30.17c-8.331-8.331-21.839-8.331-30.17,0L256,225.83L36.418,6.248
+                                                                        c-8.331-8.331-21.839-8.331-30.17,0c-8.331,8.331-8.331,21.839,0,30.17L225.83,256L6.248,475.582
+                                                                        c-8.331,8.331-8.331,21.839,0,30.17c8.331,8.331,21.839,8.331,30.17,0L256,286.17l219.582,219.582
+                                                                        c8.331,8.331,21.839,8.331,30.17,0c8.331-8.331,8.331-21.839,0-30.17L286.17,256z"/>
+                                                                </g>
+                                                            </g>
+                                                            </svg>
+
+                                                                <p class="ml-2 text-sm font-medium text-gray-500">
+                                                                    Status: {{ order.get_status_display|title }}
+                                                                </p>
+                                                            {% endif %}
+                                                        </div>
+
+                                                        <div class="mt-6 flex items-center space-x-4 divide-x divide-gray-200 border-t border-gray-200 pt-4 text-sm font-medium sm:mt-0 sm:ml-4 sm:border-none sm:pt-0">
+                                                            <div class="flex flex-1 justify-center">
+                                                                <a href="#"
+                                                                   class="whitespace-nowrap text-indigo-600 hover:text-indigo-500">View
+                                                                    product</a>
+                                                            </div>
+                                                            <div class="flex flex-1 justify-center pl-4">
+                                                                <a href="#"
+                                                                   class="whitespace-nowrap text-indigo-600 hover:text-indigo-500">Buy
+                                                                    again</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            {% endif %}
+
+                                        {% endfor %}
+                                        {#                Show more products #}
+                                        {% if order.orderitem_set.all.count > 3 %}
+
+                                        <div class="p-4 sm:p-6 items-center sm:items-start text-center">
+                                            <a href="#" class="whitespace-nowrap text-indigo-600 hover:text-indigo-500">Show
+                                                {{ order.orderitem_set.all.count|subtract:3 }}
+                                                more items</a>
+                                        </div>
+                                        {% endif %}
+
+                                    </ul>
+
+                                </div>
+
+                                <!-- More orders... -->
+                            </div>
+                        </div>
+                    {% endwith %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock profile %}

@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <script>
+        function showPassword() {
+            var passwordType = document.getElementById("myInput");
+            var show = document.getElementById("show");
+            var hide = document.getElementById("hide");
+            if (passwordType.type === "password") {
+                passwordType.type = "text";
+                hide.classList.remove("hidden");
+                show.classList.add("hidden");
+            } else {
+                passwordType.type = "password";
+                hide.classList.add("hidden");
+                show.classList.remove("hidden");
+            }
+        }
+    </script>
+    <div>
+        <div class="xl:px-20 md:px-10 sm:px-6 px-4 md:py-12 py-9 2xl:mx-auto 2xl:container md:flex items-center justify-center">
+            <div class=" md:hidden sm:mb-8 mb-6">
+                <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/sign_in_2-svg1.svg" alt="logo">
+            </div>
+            <div class="bg-white shadow-lg rounded xl:w-1/3 lg:w-5/12 md:w-1/2 w-full lg:px-10 sm:px-6 sm:py-10 px-2 py-6">
+                <p tabindex="0" class="focus:outline-none text-2xl font-extrabold leading-6 text-gray-800">Login to your
+                    account</p>
+                <p tabindex="0" class="focus:outline-none text-sm mt-4 font-medium leading-none text-gray-500">Dont have
+                    account? <a href="{% url 'register' %}"
+                                class="hover:text-gray-500 focus:text-gray-500 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none text-gray-800 cursor-pointer">
+                        Sign up here</a></p>
+                {#                    <form method="POST">#}
+                {#                        {% csrf_token %}#}
+                {##}
+                {#                    <div class="mt-10">#}
+                {#                        <label for="email" class="text-sm font-medium leading-none text-gray-800"> Email </label>#}
+                {#                        <input id="email" aria-labelledby="email" type="email" name="email" required class="bg-gray-200 border rounded text-xs font-medium leading-none placeholder-gray-800 text-gray-800 py-3 w-full pl-3 mt-2" placeholder="e.g: john@gmail.com " />#}
+                {#                    </div>#}
+                {#                    <div class="mt-6 w-full">#}
+                {#                        <label for="myInput" class="text-sm font-medium leading-none text-gray-800"> Password </label>#}
+                {#                        <div class="relative flex items-center justify-center">#}
+                {#                            <input id="myInput" type="password" name="password" required class="bg-gray-200 border rounded text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />#}
+                {#                            <div class="absolute right-0 mt-2 mr-3 cursor-pointer" onclick="showPassword()">#}
+                {#                                <div id="show">#}
+                {#                                  <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/sign_in_2-svg5.svg" alt="eye">#}
+                {#                                </div>#}
+                {#                                <div id="hide" class="hidden">#}
+                {#                                  <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/sign_in_2-svg6.svg" alt="eye">#}
+                {#                                </div>#}
+                {#                            </div>#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                    <div class="mt-8">#}
+                {#                        <button role="button" type="submit" class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">Log in</button>#}
+                {#                    </div>#}
+                {#                    </form>#}
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mt-10">
+                        {{ form.username.label_tag }}
+                        {{ form.username }}
+                    </div>
+                    <div class="mt-6 w-full">
+                        {{ form.password.label_tag }}
+                        <div class="relative flex items-center justify-center">
+                            {{ form.password }}
+                            <div class="absolute right-0 mt-2 mr-3 cursor-pointer" onclick="showPassword()">
+                                <div id="show">
+                                    <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/sign_in_2-svg5.svg"
+                                         alt="eye">
+                                </div>
+                                <div id="hide" class="hidden">
+                                    <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/sign_in_2-svg6.svg"
+                                         alt="eye">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <button role="button" type="submit"
+                                class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">
+                            Log in
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+

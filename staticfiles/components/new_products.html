@@ -1,0 +1,110 @@
+<!--
+  This example requires Tailwind CSS v2.0+ 
+  
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/aspect-ratio'),
+    ],
+  }
+  ```
+-->
+{% load math_filters %}
+{% if new_products %}
+<div class="bg-white">
+    <div class="py-16 sm:py-12 lg:mx-auto lg:max-w-7xl lg:px-8">
+        <div class="flex items-center justify-between px-4 sm:px-6 lg:px-0">
+            <h2 class="text-2xl font-bold tracking-tight text-gray-900">NEW</h2>
+            {#      <a href="#" class="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block">#}
+            {#        See everything#}
+            {#        <span aria-hidden="true"> &rarr;</span>#}
+            {#      </a>#}
+        </div>
+
+        <div class="relative mt-8">
+            <div class="relative -mb-6 w-full overflow-x-auto pb-6">
+                <ul role="list"
+                    class="mx-4 inline-flex space-x-8 sm:mx-6 lg:mx-0 lg:grid lg:grid-cols-4 lg:gap-x-8 lg:space-x-0">
+                    {% for product in new_products %}
+                        <li class="mb-8 inline-flex w-64 flex-col text-center lg:w-auto">
+                            <div class="group relative">
+                                <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md">
+                                    <img src="{% if product.image %} {{ product.image.url }} {% else %} /media/assets/product_images/no_product.avif {% endif %}"
+                                         alt="Black machined steel pen with hexagonal grip and small white logo at top."
+                                         class="h-full w-full object-contain object-center group-hover:opacity-75">
+                                </div>
+                                <div class="mt-6">
+                                    <p class="text-sm text-gray-500">{{ product.category.title }}</p>
+                                    <h3 class="mt-1 font-semibold text-gray-900">
+                                        <a href="{% url "product-detail-view" product.category.category.slug product.category.slug product.id %}">
+                                            <span class="absolute inset-0"></span>
+                                            {{ product.title|truncatechars:80 }}
+                                        </a>
+                                    </h3>
+                                    <p class="mt-2 text-gray-900">₴ {{ product.price|floatformat }}</p>
+                                </div>
+                            </div>
+
+                            <h4 class="sr-only">Available colors</h4>
+                            <div class="mt-3 flex flex-col items-center">
+                                <p class="sr-only">5 out of 5 stars</p>
+                                {% if product.reviews.all %}
+                                    <div>
+                                        <h3 class="sr-only">Reviews</h3>
+                                        <div class="flex items-center">
+                                            <!--
+                                              Heroicon name: mini/star
+
+                                              Active: "text-yellow-400", Default: "text-gray-300"
+                                            -->
+                                            {% for i in product.get_product_rating|round_half|full_stars %}
+                                                <svg class="text-yellow-400 h-5 w-5 flex-shrink-0"
+                                                     xmlns="http://www.w3.org/2000/svg"
+                                                     viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                          d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
+                                                          clip-rule="evenodd"/>
+                                                </svg>
+                                            {% endfor %}
+                                            {% if product.get_product_rating|round_half|half_star %}
+                                                <!-- Half star SVG -->
+                                                <div class="h-5 w-2.5 overflow-hidden">
+                                                    <svg class="text-yellow-400 h-5 w-5 flex-shrink-0"
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                        <path fill-rule="evenodd"
+                                                              d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
+                                                              clip-rule="evenodd"/>
+                                                    </svg>
+                                                </div>
+                                            {% endif %}
+{#                                            <p class="ml-4 prose prose-sm text-gray-500">#}
+{#                                                Rating: {{ product.get_product_rating|floatformat }}</p>#}
+{#                                        </div>#}
+                                        <p class="sr-only">{{ product.get_product_rating|floatformat }} out of 5
+                                            stars</p>
+                                    </div>
+                                <p class="mt-3 text-sm text-gray-500">{{ product.reviews.all.count }} Reviews</p>
+                                {% endif %}
+                            </div>
+
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="mt-12 flex px-4 sm:hidden">
+            <a href="#" class="text-sm font-semibold text-indigo-600 hover:text-indigo-500">
+                See everything
+                <span aria-hidden="true"> &rarr;</span>
+            </a>
+        </div>
+    </div>
+</div>
+{% endif %}

@@ -1,0 +1,6 @@
+{% for faq in faqs %}
+<dt class="mt-10 font-medium text-gray-900">{{ faq.question }}</dt>
+<dd class="prose prose-sm mt-2 max-w-none text-gray-500">
+    <p>{{ faq.answer }}</p>
+</dd>
+{% endfor %}
