@@ -1,8 +1,7 @@
-from rest_framework import permissions
-from rest_framework.permissions import BasePermission
-
 from cart.models import WishList
 from catalog.models import Product
+from rest_framework import permissions
+from rest_framework.permissions import BasePermission
 
 
 class IsSeller(BasePermission):

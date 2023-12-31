@@ -1,6 +1,5 @@
+from core.permissions import IsProductSeller, IsSeller
 from rest_framework.permissions import IsAdminUser
-
-from core.permissions import IsSeller, IsProductSeller
 
 
 class IsAdminUserMixin:

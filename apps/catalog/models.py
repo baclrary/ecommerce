@@ -1,14 +1,19 @@
+from decimal import Decimal
 from statistics import mean
 
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.text import slugify
 
-from core.validators import validate_products_count, validate_product_price
 from .permissions import (
-    category_permissions, subcategory_permissions, categoryattribute_permissions, product_permissions,
-    productattribute_permissions, banner_permissions
+    banner_permissions,
+    category_permissions,
+    categoryattribute_permissions,
+    product_permissions,
+    productattribute_permissions,
+    subcategory_permissions,
 )
 
 
@@ -71,10 +76,10 @@ class Product(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     category = models.ForeignKey(SubCategory, related_name='products', on_delete=models.CASCADE)
-    count = models.IntegerField(default=1, validators=[validate_products_count, ])
+    count = models.PositiveBigIntegerField(default=0)
     image = models.ImageField(upload_to='product_images', default='assets/product_images/default_product.png',
                               blank=True)
-    base_price = models.DecimalField(max_digits=10, decimal_places=2, validators=[validate_product_price, ])
+    base_price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(Decimal("0.01"))])
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

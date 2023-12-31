@@ -1,7 +1,6 @@
+from catalog.models import Banner, Category, Product
 from django.db.models import Count
 from django.views.generic import TemplateView
-
-from catalog.models import Category, Product, Banner
 
 
 class HomePage(TemplateView):

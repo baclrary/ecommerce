@@ -1,12 +1,12 @@
 import random
 import string
+from decimal import Decimal
 
+from catalog.models import Product
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.db.models import Sum
 from phonenumber_field.modelfields import PhoneNumberField
-
-from catalog.models import Product
-from core.validators import validate_product_price
 
 
 class Order(models.Model):
@@ -27,7 +27,7 @@ class Order(models.Model):
     ordered_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(choices=STATUS_CHOICES, max_length=300)
     closed_at = models.DateTimeField(null=True, blank=True)
-    total_sum = models.DecimalField(default=0, max_digits=14, decimal_places=2, validators=[validate_product_price, ])
+    total_sum = models.DecimalField(default=0, max_digits=14, decimal_places=2, validators=[MinValueValidator(Decimal("0.01"))])
     order_number = models.CharField(max_length=10, unique=True, editable=False)
 
     def __str__(self):

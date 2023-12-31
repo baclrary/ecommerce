@@ -1,8 +1,7 @@
-from django.contrib.auth.signals import user_logged_in
-from django.dispatch import receiver
-
 from cart.models import Cart
 from cart.views import merge_carts
+from django.contrib.auth.signals import user_logged_in
+from django.dispatch import receiver
 
 
 @receiver(user_logged_in)
