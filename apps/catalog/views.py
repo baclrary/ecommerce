@@ -1,20 +1,27 @@
 # Models
-from review.models import Review, Reply
-from catalog.models import Category, Product, CategoryAttribute, ProductAttribute, SubCategory, ProductFAQ
-
-# Models Views
-from review.views import ReviewCreateView
+from catalog.models import (
+    Category,
+    CategoryAttribute,
+    Product,
+    ProductAttribute,
+    ProductFAQ,
+    SubCategory,
+)
+from django.core.paginator import Paginator
+from django.db.models import Case, Count, IntegerField, When
+from django.http import JsonResponse
 
 # Django
 from django.shortcuts import get_object_or_404
-from django.views import generic
-from django.core.paginator import Paginator
 from django.template.loader import render_to_string
-from django.http import JsonResponse
-from django.db.models import Count, Case, When, IntegerField
+from django.views import generic
 
 # Forms
 from review.forms import ReviewForm
+from review.models import Reply, Review
+
+# Models Views
+from review.views import ReviewCreateView
 
 
 class CategoriesList(generic.ListView):
@@ -207,16 +214,13 @@ class ProductDetail(generic.DetailView):
 
             elif request.GET.get('type') == 'review':
                 reviews = self.get_reviews_for_product()[start:start + 5]
-                # user_reactions = {review.id: review.get_user_reaction(request.user) for review in reviews}
-                user_reactions = {
-                    'reviews': {review.id: review.get_user_reaction(request.user) for review in reviews},
-                    'replies': self.gather_reactions(Reply.objects.filter(review__in=reviews))
-                }
-                # Pass to template
+                user_reactions = {}
+                if request.user.is_authenticated:
+                    user_reactions['reviews']: {review.id: review.get_user_reaction(request.user) for review in reviews}
+                    user_reactions['replies']: self.gather_reactions(Reply.objects.filter(review__in=reviews))
                 html = render_to_string('catalog/reviews_items.html',
                                         {'reviews': reviews, 'user_reactions': user_reactions, 'request': request})
                 has_more = self.get_reviews_for_product()[start + 5:start + 10].exists()
-                # Pass to script
                 return JsonResponse({'html': html, 'has_more': has_more, 'user_reactions': user_reactions})
 
         context = self.get_context_data()
